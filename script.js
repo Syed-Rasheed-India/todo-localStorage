@@ -3,21 +3,20 @@ let btn   = document.getElementById('btn');
 let ulist = document.getElementById('ulist');
 let clear  = document.getElementById('cls');
 let list = document.getElementsByClassName('list');
-let count =localStorage.length;
+// let count =localStorage.length;
+let todos = JSON.parse(localStorage.getItem("todo")) || [];
+
 btn.addEventListener('click',()=>{
     // let value = input.value;
     let value = input.value.trim();
     if (value === "") return;
-    if(value!=""){
-        let node = document.createElement('li');
-        node.setAttribute("class","list")
-        let nodeValue = document.createTextNode(value);
-        node.appendChild(nodeValue)
-        ulist.appendChild(node)
-        localStorage.setItem(count,value);
-        count++
-    }
-    input.value=" "
+    todos.push(value);
+    localStorage.setItem("todo",JSON.stringify(todos));
+    let li = document.createElement('li');
+        li.textContent = value;
+        ulist.append(li);
+    // run()
+    input.value=""
 })
 
 ulist.addEventListener('click',function(event){
@@ -30,23 +29,21 @@ clear.addEventListener('click',()=>{
     localStorage.clear()
 })
 
+// function run(){
 
-for(let i =0;i<localStorage.length;i++){
+//     todos.forEach(element => {
+//         let lists = document.createElement('li');
+//         let content = document.createTextNode(element);
+//         lists.append(content);
+//         ulist.append(lists);
+//     });
+// }
 
-    let key = localStorage.key(i);
-    let value = localStorage.getItem(key);
-    let node = document.createElement('li');
-    node.setAttribute("class","list")
-    let nodeValue = document.createTextNode(value);
-    node.appendChild(nodeValue)
-    ulist.appendChild(node)
-}
+todos.forEach(element => {
+        let li = document.createElement('li');
+        li.textContent = element;
+        ulist.append(li);
+    });
 
-// localStorage.setItem("user","rasheed");
 
-let u = localStorage.getItem("user");
-console.log(u);
 
-// let name1 = document.getElementById('name');
-
-// name1.innerText = u;
